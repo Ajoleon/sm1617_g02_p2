@@ -1,0 +1,60 @@
+Tarea asincrona para que se conecte en segundo plano sin esperar a la actividad.
+En clase OnCreate de MainActivity.
+
+    class Autentica{
+        public Autentica(String u, String p, String ip, String port){}
+    }
+    class Sesion{
+        public String mSessionId="";
+        public String mExpires="";
+    }
+    class Autentica extends AsyncTask<Autentica, Void,Sesion> {
+        Autentica datos=null;
+        @Override
+        protected  void onPreExecute(){
+            super.onPreExecute();
+
+        }
+
+    }
+    class Autentica extends AsyncTask(Autentica...){
+	
+    }
+
+Runonuithread: lo que se haga dentro, se pasa a la hebra principal. En esta hebra se puede acceder a la interfaz de usuario.
+En doinbackground no se puede hacer nada de la interfaz, como mostrar una tostada. Da error. No se puede acceder a la interfaz de usuario.
+En "", no se podría hacer un set text. Debe ser llamado desde un método de interfaz de usuario. Para ello
+se ejecuta otro runable
+Thread.sleep(2000) hace que haya un tiempo hasta que responda otra vez, y no lo ejecute todo rápidamente
+
+En doinbackground, se debe hacer la conexion socket.
+malformedurlexception es excepcion para saber si se ha introducido mal la url.
+
+método write necesita array de bytes ( la peticion url), buffered reader permite acceder al readline.
+hay que cerra el outputstream, inputstream y socket. En el manifiesto hay que permitir el internet.
+\r\n\r\n -> fin de cabecera y fin del cuerpo en el mensaje de peticion
+
+la ultima vez que se recoge la linea da excepcion
+if(linea!=NULL)
+if(linea.contains("SESION-ID)){
+	String param[]=linea.split("&");
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
