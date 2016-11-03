@@ -7,6 +7,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -33,6 +35,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
 
@@ -45,26 +49,33 @@ public class MainActivity extends AppCompatActivity {
         }
 
         ft.commit();
-    }
-    class Autentica{
-        public Autentica(String u, String p, String ip, String port){
+        final Autentication a=new Autentication("","","",0);
 
-        }
+        Button boton = (Button)findViewById(R.id.auth_button_send);
+        boton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Autenticar aut = new Autenticar();
+                aut.execute(a);
+            }
+        });
+
+
     }
     class Sesion{
         public String mSessionId="";
         public String mExpires="";
     }
-    class Autentication extends AsyncTask<Autentica,Void,Sesion>{
+    class Autenticar extends AsyncTask<Autentication,Void,Sesion>{
 
         @Override
         protected void onPreExecute() {
-            Autentica datos = null;
+            Autentication datos = null;
             super.onPreExecute();
         }
 
         @Override
-        protected Sesion doInBackground(Autentica... params) {
+        protected Sesion doInBackground(Autentication... params) {
             try {
                 Socket s = new Socket (InetAddress.getByName("hhtp://www4.ujaen.es"),80);
                 PrintWriter pw = new PrintWriter(s.getOutputStream());

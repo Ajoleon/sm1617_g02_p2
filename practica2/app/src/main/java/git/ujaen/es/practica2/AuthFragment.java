@@ -105,6 +105,7 @@ public class AuthFragment extends Fragment {
                 Toast.makeText(getActivity(), "Ip: " + mAutentica.getmIP(), Toast.LENGTH_SHORT).show();
                 Toast.makeText(getActivity(), "Puerto: " + mAutentica.getmPort(), Toast.LENGTH_SHORT).show();
 
+
             }
         });
 
