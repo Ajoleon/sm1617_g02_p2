@@ -86,6 +86,8 @@ public class MainActivity extends AppCompatActivity {
                     Log.d("Prueba",t);
                 }
                 br.close();
+                s.close();
+                pw.close();
             } catch (IOException e) {
                 e.printStackTrace();
             }
