@@ -10,15 +10,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.PrintWriter;
-import java.net.InetAddress;
-import java.net.Socket;
-import java.net.SocketAddress;
+import java.io.*;
+import java.net.*;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -51,10 +44,10 @@ public class MainActivity extends AppCompatActivity {
         ft.commit();
         final Autentication a=new Autentication("","","",0);
 
-        Button boton = (Button)findViewById(R.id.auth_button_send);
+        Button boton = (Button)findViewById(R.id.auth_button_send1);
         boton.setOnClickListener(new View.OnClickListener(){
             @Override
-            public void onClick(View v) {
+            public void onClick(View v) {//Hace falta un botón en el activity main
                 Autenticar aut = new Autenticar();
                 aut.execute(a);
             }
@@ -77,17 +70,23 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected Sesion doInBackground(Autentication... params) {
             try {
-                Socket s = new Socket (InetAddress.getByName("hhtp://www4.ujaen.es"),80);
-                PrintWriter pw = new PrintWriter(s.getOutputStream());
-                pw.print("GET /~jccuevas/ssmm/autentica.php?user=user&pass=12345 HTTP/1.1\r\nHost: www4.ujaen.es \r\n\r\n");
-                BufferedReader br = new BufferedReader(new InputStreamReader(s.getInputStream()));
-                String t;
-                while((t = br.readLine()) != null){
-                    Log.d("Prueba",t);
+                Socket socket = new Socket("http://www4.ujaen.es",80);
+
+                PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())));
+                out.print("GET /~jccuevas/ssmm/autentica.php?user=user&pass=12345 HTTP/1.1\r\nhost:www4.ujaen.es\r\n\r\n");
+
+                BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                String inputline;
+                while((inputline = in.readLine()) != null){
+                    Log.d("Prueba",inputline);
+                    System.out.println(inputline);
                 }
-                br.close();
-                s.close();
-                pw.close();
+                out.close();
+                in.close();
+                socket.close();
+
+                System.out.println("PRINTING HERE!!!");
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
