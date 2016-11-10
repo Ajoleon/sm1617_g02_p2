@@ -9,6 +9,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import static git.ujaen.es.practica2.MainActivity.*;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -99,7 +101,10 @@ public class AuthFragment extends Fragment {
 
                 //Autentication datos = new Autentication(usuario, password, ip, puerto);
                 //mAutentica = new Autentication(mUser,mPass,null,0);
+                final Autentication a=new Autentication(mAutentica.getmUser(),mAutentica.getmPass(),mAutentica.getmIP(),mAutentica.getmPort());
 
+                Autenticar aut = new Autenticar();
+                aut.execute(a);
                 Toast.makeText(getActivity(), "Usuario: " + mAutentica.getmUser(), Toast.LENGTH_SHORT).show();
                 Toast.makeText(getActivity(), "Password: " + mAutentica.getmPass(), Toast.LENGTH_SHORT).show();
                 Toast.makeText(getActivity(), "Ip: " + mAutentica.getmIP(), Toast.LENGTH_SHORT).show();
@@ -125,6 +130,8 @@ public class AuthFragment extends Fragment {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 mAutentica.setmUser(mEditUser.getEditableText().toString());
+                mAutentica.setmPass(mEditPass.getEditableText().toString());
+
             }
         });
         mEditUser.setText(mAutentica.getmUser());
@@ -136,5 +143,7 @@ public class AuthFragment extends Fragment {
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putString(ARG_PARAM1, mAutentica.getmUser());
+        outState.putString(ARG_PARAM2, mAutentica.getmPass());
+
     }
 }
