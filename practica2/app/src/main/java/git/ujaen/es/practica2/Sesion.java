@@ -5,6 +5,6 @@ package git.ujaen.es.practica2;
  */
 
 public class Sesion{
-    public String mSessionId="";
-    public String mExpires="";
+    public String mSessionId;
+    public String mExpires;
 }
