@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
             AuthFragment au = AuthFragment.newInstance("pepe", "12345");
             ft.add(R.id.main_frame, au);
             ft.addToBackStack(null);
+
         }
 
         ft.commit();
@@ -70,22 +71,26 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected Sesion doInBackground(Autentication... params) {
             try {
-                Socket socket = new Socket("http://www4.ujaen.es",80);
 
-                PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())));
-                out.print("GET /~jccuevas/ssmm/autentica.php?user=user&pass=12345 HTTP/1.1\r\nhost:www4.ujaen.es\r\n\r\n");
+                URL url = new URL("http://www4.ujaen.es");
+                Socket socket = new Socket(url.getHost(),80);
+                //PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())));
+                OutputStreamWriter os = new OutputStreamWriter(socket.getOutputStream());
+               InputStreamReader is =  new InputStreamReader(socket.getInputStream());
 
-                BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                os.write(new String("GET /~jccuevas/ssmm/autentica.php?user=user&pass=12345 HTTP/1.1\r\nhost:www4.ujaen.es\r\n\r\n"));
+                os.flush();
+                BufferedReader in = new BufferedReader(is);
                 String inputline;
                 while((inputline = in.readLine()) != null){
                     Log.d("Prueba",inputline);
                     System.out.println(inputline);
                 }
-                out.close();
+                os.close();
                 in.close();
                 socket.close();
 
-                System.out.println("PRINTING HERE!!!");
+
 
             } catch (IOException e) {
                 e.printStackTrace();
