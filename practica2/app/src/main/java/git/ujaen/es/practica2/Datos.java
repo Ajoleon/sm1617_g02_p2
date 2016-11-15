@@ -1,6 +1,10 @@
 package git.ujaen.es.practica2;
 
-/**La clase datos especifica los campos que se almacenarán en el mensaje
+/**
+ * @author Pablo Castillo Segura - Antonio José León Sánchez
+ * @version: 15/11/2016
+ *
+ * La clase datos especifica los campos que se almacenarán en el mensaje
  * Tendrá un campo entero y otro de cadena de caracteres, que se utilizarán siempre en los mensajes
  *
  * Como modo alternativo, se podría montar un mensaje con el campo de datos con un string,
@@ -20,7 +24,11 @@ public class Datos {
     int campo1 = 0;
     String campo2 = "";
 
-    //Constructor de la clase Datos
+    /**Constructor de la clase Datos
+     *
+     * @param c1 primer campo de los datos
+     * @param c2 segundo campo de los datos
+     */
     public Datos (int c1, String c2){
         this.campo1=c1;
         this.campo2=c2;
@@ -29,13 +37,13 @@ public class Datos {
     /**
      * Método para convertir los datos en cadena de caracteres
      *
-     * @return c1+" "+c2 que son los campos separados por un espacio
+     * @exception NumberFormatException para evitar error al pasar de entero a String en el campo 1
+     * @return    los campos en una cadena de caracteres separados por un espacio
      */
     public String toString(){
         String c1="";
         String c2="";
 
-        //Try por si es necesario capturar la excepción del número al pasarlo a cadena de caracteres
         try{
             c1 = String.valueOf(campo1);
         }catch(NumberFormatException e){
