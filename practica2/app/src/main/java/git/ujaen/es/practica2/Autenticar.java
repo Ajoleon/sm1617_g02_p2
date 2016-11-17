@@ -45,11 +45,11 @@ public  class Autenticar extends AsyncTask<Autentication,Void,Sesion> {
             while ((inputline = in.readLine()) != null) {
                 Log.d("Prueba", inputline);
                 System.out.println(inputline);
+                String [] linea = inputline.split("&");
+                for(int i = 0 ;i< linea.length;i++){
+                    System.out.println(linea[i]);
+                }
             }
-          //String [] linea = inputline.split("&");
-  //          System.out.println(linea[0]);
-           // sesion.mSessionId = linea[0];
-            //sesion.mExpires="Prueba";
             os.close();
             in.close();
             socket.close();
