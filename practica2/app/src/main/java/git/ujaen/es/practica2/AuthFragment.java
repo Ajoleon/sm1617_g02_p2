@@ -1,5 +1,6 @@
 package git.ujaen.es.practica2;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -135,6 +136,11 @@ public class AuthFragment extends Fragment {
                         } catch (ExecutionException e) {
                             e.printStackTrace();
                         }
+                        SharedPreferences settings = getActivity().getSharedPreferences("sesion",0);
+                        SharedPreferences.Editor editor = settings.edit();
+                        editor.putString("SESION-ID",sesion.getmSessionId());
+                        editor.putString("EXPIRES",sesion.getmExpires());
+                        editor.commit();
 
                         Toast.makeText(getActivity(), "SESION-ID: " + sesion.getmSessionId(), Toast.LENGTH_SHORT).show();
                         Toast.makeText(getActivity(), "EXPIRES: " + sesion.getmExpires(), Toast.LENGTH_SHORT).show();
