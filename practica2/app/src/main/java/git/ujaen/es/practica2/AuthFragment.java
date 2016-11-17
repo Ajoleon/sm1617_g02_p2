@@ -9,6 +9,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.concurrent.ExecutionException;
 
 import static git.ujaen.es.practica2.MainActivity.*;
@@ -32,7 +36,7 @@ public class AuthFragment extends Fragment {
     private String mUser = "";
     private String mPass = "";
     private Autentication mAutentica = new Autentication("","","",0);
-
+    private Sesion sesion = new Sesion("","");
     private EditText mEditUser = null;
     private EditText mEditPass = null;
     private EditText mEditIp = null;
@@ -89,7 +93,6 @@ public class AuthFragment extends Fragment {
         redibuja(fragmento);
 
         Button boton = (Button) fragmento.findViewById(R.id.auth_button_send);
-
         boton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -103,20 +106,56 @@ public class AuthFragment extends Fragment {
 
                 //Autentication datos = new Autentication(usuario, password, ip, puerto);
                 //mAutentica = new Autentication(mUser,mPass,null,0);
-                final Autentication a=new Autentication(mAutentica.getmUser(),mAutentica.getmPass(),mAutentica.getmIP(),mAutentica.getmPort());
+                if(!sesion.getmExpires().equals("")) {
+                    Autenticar aut = new Autenticar();
+                    Date date = new Date();
+                    DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
+                    Date fecha = null ;
+                    Date fechaactual = new Date();
+                    try {
+                        fecha = dateFormat.parse(sesion.getmExpires());
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    try {
+                        fechaactual = dateFormat.parse(dateFormat.format(date));
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
 
-                Autenticar aut = new Autenticar();
-                Sesion sesion = new Sesion("","");
-                try {
-                   sesion = aut.execute(a).get();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                } catch (ExecutionException e) {
-                    e.printStackTrace();
-                }
-                
-                Toast.makeText(getActivity(), "SESION-ID: " + sesion.getmSessionId(), Toast.LENGTH_SHORT).show();
-                Toast.makeText(getActivity(), "EXPIRES: " + sesion.getmExpires(), Toast.LENGTH_SHORT).show();
+
+                    System.out.println(fecha);
+                    System.out.println(fechaactual);
+                    if ((fechaactual.after(fecha) || !sesion.getmSessionId().startsWith("SID"+mAutentica.getmUser()))) {
+                        try {
+                            final Autentication a = new Autentication(mAutentica.getmUser(), mAutentica.getmPass(), mAutentica.getmIP(), mAutentica.getmPort());
+                            sesion = aut.execute(a).get();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        } catch (ExecutionException e) {
+                            e.printStackTrace();
+                        }
+
+                        Toast.makeText(getActivity(), "SESION-ID: " + sesion.getmSessionId(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "EXPIRES: " + sesion.getmExpires(), Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getActivity(), "La sesion aun es valida", Toast.LENGTH_SHORT).show();
+                    }
+                }else{
+                    try {
+                        final Autentication a = new Autentication(mAutentica.getmUser(), mAutentica.getmPass(), mAutentica.getmIP(), mAutentica.getmPort());
+                        Autenticar aut = new Autenticar();
+                        sesion = aut.execute(a).get();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    } catch (ExecutionException e) {
+                        e.printStackTrace();
+                    }
+
+                    Toast.makeText(getActivity(), "SESION-ID: " + sesion.getmSessionId(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "EXPIRES: " + sesion.getmExpires(), Toast.LENGTH_SHORT).show();
+                    }
+
 
 
 
