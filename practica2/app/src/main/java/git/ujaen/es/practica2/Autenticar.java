@@ -26,7 +26,7 @@ public  class Autenticar extends AsyncTask<Autentication,Void,Sesion> {
     @Override
     protected Sesion doInBackground(Autentication ... params) {
         try {
-            Sesion sesion = new Sesion();
+            Sesion sesion = new Sesion("","");
             String mUser = params[0].mUser;
             String mPass = params[0].mPass;
             String mIp = params[0].mIP;
@@ -41,15 +41,17 @@ public  class Autenticar extends AsyncTask<Autentication,Void,Sesion> {
             os.flush();
             BufferedReader in = new BufferedReader(is);
             String inputline;
-
+            String [] linea = null;
             while ((inputline = in.readLine()) != null) {
                 Log.d("Prueba", inputline);
                 System.out.println(inputline);
-                String [] linea = inputline.split("&");
+                linea = inputline.split("&");
                 for(int i = 0 ;i< linea.length;i++){
                     System.out.println(linea[i]);
                 }
             }
+
+            
             os.close();
             in.close();
             socket.close();
