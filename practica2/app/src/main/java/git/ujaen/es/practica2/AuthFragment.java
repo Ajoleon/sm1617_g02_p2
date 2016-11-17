@@ -9,6 +9,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.util.concurrent.ExecutionException;
+
 import static git.ujaen.es.practica2.MainActivity.*;
 
 
@@ -104,11 +106,18 @@ public class AuthFragment extends Fragment {
                 final Autentication a=new Autentication(mAutentica.getmUser(),mAutentica.getmPass(),mAutentica.getmIP(),mAutentica.getmPort());
 
                 Autenticar aut = new Autenticar();
-                aut.execute(a);
-                Toast.makeText(getActivity(), "Usuario: " + mAutentica.getmUser(), Toast.LENGTH_SHORT).show();
-                Toast.makeText(getActivity(), "Password: " + mAutentica.getmPass(), Toast.LENGTH_SHORT).show();
-                Toast.makeText(getActivity(), "Ip: " + mAutentica.getmIP(), Toast.LENGTH_SHORT).show();
-                Toast.makeText(getActivity(), "Puerto: " + mAutentica.getmPort(), Toast.LENGTH_SHORT).show();
+                Sesion sesion = new Sesion("","");
+                try {
+                   sesion = aut.execute(a).get();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                }
+                
+                Toast.makeText(getActivity(), "SESION-ID: " + sesion.getmSessionId(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "EXPIRES: " + sesion.getmExpires(), Toast.LENGTH_SHORT).show();
+
 
 
             }
