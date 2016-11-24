@@ -97,37 +97,8 @@ public class AuthFragment extends Fragment {
         boton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*Para evitar problemas de cambios en configuracion, se almacenan aquí directamente
-                String usuario = mEditUser.getText().toString();
-                String password = mEditPass.getText().toString();
-                String ip = mEditIp.getText().toString();
-                Integer puerto = Integer.parseInt(mEditPort.getText().toString());
-                */
-                //Toast.makeText(fragmento.this,nombre,Toast.LENGTH_SHORT).show();
-
-                //Autentication datos = new Autentication(usuario, password, ip, puerto);
-                //mAutentica = new Autentication(mUser,mPass,null,0);
-                if(!sesion.getmExpires().equals("")) {
                     Autenticar aut = new Autenticar();
-                    Date date = new Date();
-                    DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
-                    Date fecha = null ;
-                    Date fechaactual = new Date();
-                    try {
-                        fecha = dateFormat.parse(sesion.getmExpires());
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
-                    try {
-                        fechaactual = dateFormat.parse(dateFormat.format(date));
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
 
-
-                    System.out.println(fecha);
-                    System.out.println(fechaactual);
-                    if ((fechaactual.after(fecha) || !sesion.getmSessionId().startsWith("SID"+mAutentica.getmUser()))) {
                         try {
                             final Autentication a = new Autentication(mAutentica.getmUser(), mAutentica.getmPass(), mAutentica.getmIP(), mAutentica.getmPort());
                             sesion = aut.execute(a).get();
@@ -136,32 +107,13 @@ public class AuthFragment extends Fragment {
                         } catch (ExecutionException e) {
                             e.printStackTrace();
                         }
-                        SharedPreferences settings = getActivity().getSharedPreferences("sesion",0);
+                        SharedPreferences settings = getActivity().getSharedPreferences("sesion", 0);
                         SharedPreferences.Editor editor = settings.edit();
                         editor.putString("SESION-ID",sesion.getmSessionId());
                         editor.putString("EXPIRES",sesion.getmExpires());
                         editor.commit();
-
-                        Toast.makeText(getActivity(), "SESION-ID: " + sesion.getmSessionId(), Toast.LENGTH_SHORT).show();
-                        Toast.makeText(getActivity(), "EXPIRES: " + sesion.getmExpires(), Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(getActivity(), "La sesion aun es valida", Toast.LENGTH_SHORT).show();
-                    }
-                }else{
-                    try {
-                        final Autentication a = new Autentication(mAutentica.getmUser(), mAutentica.getmPass(), mAutentica.getmIP(), mAutentica.getmPort());
-                        Autenticar aut = new Autenticar();
-                        sesion = aut.execute(a).get();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    } catch (ExecutionException e) {
-                        e.printStackTrace();
-                    }
-
-                    Toast.makeText(getActivity(), "SESION-ID: " + sesion.getmSessionId(), Toast.LENGTH_SHORT).show();
-                    Toast.makeText(getActivity(), "EXPIRES: " + sesion.getmExpires(), Toast.LENGTH_SHORT).show();
-                    }
-
+                        System.out.println( "SESION-ID: " + sesion.getmSessionId());
+                        System.out.println("EXPIRES: " + sesion.getmExpires());
 
 
 
