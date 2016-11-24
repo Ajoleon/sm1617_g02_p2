@@ -1,5 +1,6 @@
 package git.ujaen.es.practica2;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -114,6 +115,9 @@ public class AuthFragment extends Fragment {
                         editor.commit();
                         System.out.println( "SESION-ID: " + sesion.getmSessionId());
                         System.out.println("EXPIRES: " + sesion.getmExpires());
+                        Intent intent= new Intent(getActivity(), Main2Activity.class);
+                        startActivity(intent);
+
 
 
 

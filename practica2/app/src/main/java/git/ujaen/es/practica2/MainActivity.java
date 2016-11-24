@@ -1,5 +1,6 @@
 package git.ujaen.es.practica2;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -59,14 +60,15 @@ public class MainActivity extends AppCompatActivity {
 
             Fragment f = fm.findFragmentById(R.id.main_frame);
             if (f == null) {//Si no es null es que había un fragmento
-                AuthFragment au = AuthFragment.newInstance("", "");
+                AuthFragment au = AuthFragment.newInstance("","");
                 ft.add(R.id.main_frame, au);
                 ft.addToBackStack(null);
                 ft.commit();
-                //}
+
             }
         } else {
-            System.out.println("he entrado");//TODO tenemos que hacer aqui que cambie de actividad.
+            Intent intent= new Intent(this, PasoParam.class);
+            startActivity(intent);
         }
         listview();
     }
