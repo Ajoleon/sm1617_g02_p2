@@ -34,27 +34,8 @@ public class PasoParam extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         //Infla  el contenedor con el fragmento de explicación
         View fragmento = inflater.inflate(R.layout.fragment_paso, container, false);
-
-        //Recogemos los datos del intent que se habían enviado a esta actividad
-        Bundle bundle= getActivity().getIntent().getExtras();
-        if(bundle!=null){
-            String usuario = bundle.getString("User");
-            String clave = bundle.getString("Pass");
-            String ip = bundle.getString("Ip");
-            String puerto = bundle.getString("Port");
-
             TextView tv1 = (TextView)fragmento.findViewById(R.id.textView1);
-            tv1.setText(usuario);
-            TextView tv2 = (TextView)fragmento.findViewById(R.id.textView3);
-            tv2.setText(clave);
-            TextView tv3 = (TextView)fragmento.findViewById(R.id.textView4);
-            tv3.setText(ip);
-            TextView tv4 = (TextView)fragmento.findViewById(R.id.textView5);
-            tv4.setText(puerto);
-
-            Toast.makeText(getActivity(), "Usuario: " + usuario, Toast.LENGTH_SHORT).show();
-        }
-
+            tv1.setText("Aquí estará la toma de datos para su envío");
         //Devuelve la vista
         return fragmento;
     }

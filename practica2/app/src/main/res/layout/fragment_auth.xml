@@ -15,28 +15,14 @@
         android:layout_below="@+id/auth_edit_user"
         />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/auth_port"
-        android:id="@+id/auth_label_port"
-        android:layout_below="@+id/auth_edit_ip" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/auth_ip"
-        android:id="@+id/auth_label_ip"
-        android:layout_below="@+id/auth_edit_pass" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/auth_enviar"
         android:id="@+id/auth_button_send"
-        android:layout_below="@+id/auth_edit_port"
+        android:layout_below="@+id/auth_label_pass"
         android:onClick="onSend" />
 
     <EditText
@@ -49,36 +35,6 @@
         android:layout_alignLeft="@+id/auth_edit_user"
         android:layout_alignStart="@+id/auth_edit_user" />
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/auth_edit_ip"
-        android:hint="@string/auth_hint_ip"
-        android:layout_below="@+id/auth_edit_pass"
-        android:layout_alignLeft="@+id/auth_edit_pass"
-        android:layout_alignStart="@+id/auth_edit_pass" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/auth_edit_port"
-        android:hint="@string/auth_hint_port"
-        android:inputType="number"
-        android:layout_below="@+id/auth_edit_ip"
-        android:layout_alignLeft="@+id/auth_edit_ip"
-        android:layout_alignStart="@+id/auth_edit_ip" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/auth_edit_user"
-        android:hint="@string/auth_hint_user"
-        android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/auth_label_ip"
-        android:layout_toEndOf="@+id/auth_label_ip"
-        android:layout_marginLeft="35dp"
-        android:layout_marginStart="35dp" />
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -89,5 +45,14 @@
         android:layout_alignBottom="@+id/auth_edit_user"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/auth_edit_user"
+        android:hint="@string/auth_hint_user"
+        android:layout_marginLeft="35dp"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/auth_label_user" />
 
 </RelativeLayout>

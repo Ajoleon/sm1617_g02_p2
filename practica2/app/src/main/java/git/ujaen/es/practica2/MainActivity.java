@@ -44,12 +44,15 @@ public class MainActivity extends AppCompatActivity {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
         Date fecha = null;
         Date fechaactual = new Date();
+        System.out.println("aqui");
         try {
+            System.out.println("entro");
             fecha = dateFormat.parse(expires);
         } catch (ParseException e) {
             e.printStackTrace();
         }
         try {
+            System.out.println("entro2");
             fechaactual = dateFormat.parse(dateFormat.format(date));
         } catch (ParseException e) {
             e.printStackTrace();
@@ -67,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
 
             }
         } else {
-            Intent intent= new Intent(this, PasoParam.class);
+            Intent intent= new Intent(this,Main2Activity.class);
             startActivity(intent);
         }
         listview();
