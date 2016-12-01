@@ -113,8 +113,10 @@ public class AuthFragment extends Fragment {
                         editor.putString("SESION-ID",sesion.getmSessionId());
                         editor.putString("EXPIRES",sesion.getmExpires());
                         editor.commit();
+
                         System.out.println( "SESION-ID: " + sesion.getmSessionId());
                         System.out.println("EXPIRES: " + sesion.getmExpires());
+
                         Intent intent= new Intent(getActivity(), Main2Activity.class);
                         startActivity(intent);
 

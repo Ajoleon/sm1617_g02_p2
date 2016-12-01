@@ -35,16 +35,20 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
+
         SharedPreferences settings = getSharedPreferences("sesion", 0);
+
         String sesionid = settings.getString("SESION-ID", "");
         String expires = settings.getString("EXPIRES", "0000-00-00-00-00-00");
         System.out.println(expires);
+
         Date date = new Date();
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
         Date fecha = null;
         Date fechaactual = new Date();
-        System.out.println("aqui");
+
         try {
             System.out.println("entro");
             fecha = dateFormat.parse(expires);
@@ -73,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
             Intent intent= new Intent(this,Main2Activity.class);
             startActivity(intent);
         }
+
         listview();
     }
     public void listview(){
