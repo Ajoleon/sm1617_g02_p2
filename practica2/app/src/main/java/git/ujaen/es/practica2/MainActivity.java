@@ -1,7 +1,10 @@
 package git.ujaen.es.practica2;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -14,6 +17,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.io.*;
 import java.net.*;
@@ -165,8 +169,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
-
 
 }
 

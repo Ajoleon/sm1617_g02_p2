@@ -46,10 +46,10 @@ public class Main2Activity extends AppCompatActivity {
 
         }
 
-        listview();
+        listview1();
     }
 
-    public void listview(){
+    public void listview1(){
         //String para listview con los títulos de los fragmentos
         final String[] opciones = { "Explicación", "Toma de medidas", "Desconexión"};
 
@@ -138,6 +138,95 @@ public class Main2Activity extends AppCompatActivity {
                         ft.addToBackStack(null);
                         //Ejecuta la transacción de fragmentos
                         ft.commit();
+
+                        //Para el desplegable en caso de abrirlo tras desconectar sin cerrar la aplicación
+                        listview2();
+                        break;
+                }
+
+                //Obtenemos texto del item en la posición clickada
+                //String texto = String.valueOf(a.getItemAtPosition(position));
+
+                //Mostramos tostada con el texto y la posición
+                //Toast.makeText(MainActivity.this, texto +", con posicion: "+ position, Toast.LENGTH_SHORT).show();
+
+            }
+        });
+    }
+
+    //Para el desplegable en caso de abrirlo tras desconectar sin cerrar la aplicación
+    public void listview2(){
+        //String para listview con los títulos de los fragmentos
+        final String[] opciones = { "Explicación", "Autenticación"};
+
+        //Creamos el adaptador
+        ArrayAdapter adaptador = new ArrayAdapter(this, android.R.layout.simple_list_item_1, opciones);
+
+        //Encontramos ListView del fragmento
+        final ListView listView = (ListView) findViewById(R.id.list_view);
+        //Establecemos adaptador para ese ListView
+        listView.setAdapter(adaptador);
+
+        //Establecemos un escuchador de click en los items
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            /**Método al hacer click en un item de la lista
+             *
+             * @param a     Adaptador del ListView
+             * @param v     Vista
+             * @param position  Posición del item clickado
+             * @param id    id del item
+             */
+            @Override
+            public void onItemClick(AdapterView<?> a, View v, int position, long id){
+                //Llamamos al Gestor de fragmentos
+                FragmentManager fm = getSupportFragmentManager();
+                //Comenzamos la transacción de fragmentos
+                FragmentTransaction ft = fm.beginTransaction();
+                //Encontramos el fragmento principal de la aplicación
+                Fragment f = fm.findFragmentById(R.id.main_frame);
+
+                //Switch para los distintos casos de los items del ListView. La entrada es la posición del item clickado
+                switch (position) {
+
+                    //Caso de posición 0, que es del fragmento de explicación
+                    case 0:
+                        //if(autenticado) {
+                        //Se inicializa una nueva instancia del fragmento de explicación
+                        Explanation e = Explanation.newInstance();
+
+                        //Se añade fragmento de explicación
+                        ft.replace(R.id.main_frame, e);
+
+                        //Añadimos null a la pila hacia atrás
+                        ft.addToBackStack(null);
+                        //Ejecuta la transacción de fragmentos
+                        ft.commit();
+
+                        //Establecemos autenticado a false
+                        //    autenticado = false;
+                        //}
+
+                        break;
+
+                    //Caso de posición 1,
+                    case 1:
+                        //Si no se ha accedido al fragmento de autenticado, para que no haya
+                        //un bug en el recreado del fragmento el cambio a la otra vista lo realice
+                        //if(!autenticado){
+                        //Creamos una nueva instancia del fragmento de autenticación, donde se inician los parámetros
+                        AuthFragment au = AuthFragment.newInstance("", "");
+                        //Reemplazamos el fragmento ya existente por el de autenticación
+                        ft.replace(R.id.main_frame, au);
+
+                        //Añadimos null a la pila hacia atrás
+                        ft.addToBackStack(null);
+                        //Ejecuta la transacción de fragmentos
+                        ft.commit();
+
+                        //Establecemos autenticado a true porque ha entrado en el fragmento de autenticación
+                        //    autenticado = true;
+                        //}
 
                         break;
                 }
