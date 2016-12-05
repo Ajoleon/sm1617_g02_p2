@@ -2,9 +2,11 @@ package git.ujaen.es.practica2;
 
 import android.content.Context;
 import android.content.Intent;
+
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -14,13 +16,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.concurrent.ExecutionException;
-
-import static git.ujaen.es.practica2.MainActivity.*;
 
 
 /**
@@ -44,8 +40,6 @@ public class AuthFragment extends Fragment {
     private Sesion sesion = new Sesion("","");
     private EditText mEditUser = null;
     private EditText mEditPass = null;
-    private EditText mEditIp = null;
-    private EditText mEditPort = null;
 
     public AuthFragment() {
         // Required empty public constructor
@@ -102,7 +96,10 @@ public class AuthFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                isOnline();
+                Boolean online = isOnline();
+                System.out.println("Está activa "+online);
+
+                if(online) {
                     Autenticar aut = new Autenticar();
 
                     try {
@@ -113,21 +110,25 @@ public class AuthFragment extends Fragment {
                     } catch (ExecutionException e) {
                         e.printStackTrace();
                     }
+
                     SharedPreferences settings = getActivity().getSharedPreferences("sesion", 0);
                     SharedPreferences.Editor editor = settings.edit();
-                    editor.putString("SESION-ID",sesion.getmSessionId());
-                    editor.putString("EXPIRES",sesion.getmExpires());
+                    editor.putString("SESION-ID", sesion.getmSessionId());
+                    editor.putString("EXPIRES", sesion.getmExpires());
                     editor.commit();
 
-                    System.out.println( "SESION-ID: " + sesion.getmSessionId());
+                    System.out.println("SESION-ID: " + sesion.getmSessionId());
                     System.out.println("EXPIRES: " + sesion.getmExpires());
 
-                    Intent intent= new Intent(getActivity(), Main2Activity.class);
+
+                    Intent intent = new Intent(getActivity(), Main2Activity.class);
                     startActivity(intent);
 
 
 
-
+                }else{
+                    Toast.makeText(getActivity(), "Active la conexión a Internet", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -169,11 +170,11 @@ public class AuthFragment extends Fragment {
 
         NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
 
-        boolean isConnected = activeNetwork.isConnectedOrConnecting();
-        System.out.println( "Conectado: " + isConnected);
-        if(isConnected){
+        if(activeNetwork!=null && activeNetwork.isConnectedOrConnecting()){// obtener los datos
             return true;
+        }else{// mostrar el error
+            return false;
         }
-        return false;
     }
+
 }

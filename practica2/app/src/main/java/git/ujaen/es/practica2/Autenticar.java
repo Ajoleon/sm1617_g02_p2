@@ -43,9 +43,7 @@ public  class Autenticar extends AsyncTask<Autentication,Void,Sesion> {
             String [] sessionid =  null;
             String [] expires = null;
             while ((inputline = in.readLine()) != null) {
-                Log.d("Prueba", inputline);
                 linea = inputline.split("&");
-
             }
             sessionid = linea[0].split("SESION-ID=");
             expires = linea[1].split("EXPIRES=");

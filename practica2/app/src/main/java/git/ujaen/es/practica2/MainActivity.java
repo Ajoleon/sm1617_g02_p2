@@ -54,18 +54,18 @@ public class MainActivity extends AppCompatActivity {
         Date fechaactual = new Date();
 
         try {
-            System.out.println("entro");
             fecha = dateFormat.parse(expires);
         } catch (ParseException e) {
             e.printStackTrace();
         }
         try {
-            System.out.println("entro2");
             fechaactual = dateFormat.parse(dateFormat.format(date));
         } catch (ParseException e) {
             e.printStackTrace();
         }
+        System.out.println("Fecha actual "+fechaactual+ " Fecha "+fecha);
         if (fechaactual.after(fecha)) {
+
             FragmentManager fm = getSupportFragmentManager();
             FragmentTransaction ft = fm.beginTransaction();
 
