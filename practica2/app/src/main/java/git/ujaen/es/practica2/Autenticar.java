@@ -29,8 +29,6 @@ public  class Autenticar extends AsyncTask<Autentication,Void,Sesion> {
         try {
             String mUser = params[0].mUser;
             String mPass = params[0].mPass;
-            String mIp = params[0].mIP;
-            int mPort = params[0].mPort;
             URL url = new URL("http://www4.ujaen.es");
             Socket socket = new Socket(url.getHost(), 80);
             //PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())));
