@@ -32,10 +32,9 @@ public class Explanation extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         //Infla  el contenedor con el fragmento de explicación
-        View fragmento = inflater.inflate(R.layout.fragment_explanation, container, false);
+        View fragmento = inflater.inflate(R.layout.fragment_log, container, false);
         //Devuelve la vista
         return fragmento;
     }
-
 
 }

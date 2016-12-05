@@ -157,7 +157,7 @@ public class Main2Activity extends AppCompatActivity {
     //Para el desplegable en caso de abrirlo tras desconectar sin cerrar la aplicación
     public void listview2(){
         //String para listview con los títulos de los fragmentos
-        final String[] opciones = { "Explicación", "Autenticación"};
+        final String[] opciones = { "Explicación", "Autenticación", "Historial de usuarios"};
 
         //Creamos el adaptador
         ArrayAdapter adaptador = new ArrayAdapter(this, android.R.layout.simple_list_item_1, opciones);
@@ -228,6 +228,16 @@ public class Main2Activity extends AppCompatActivity {
                         //    autenticado = true;
                         //}
 
+                        break;
+                    case 2:
+                        //Creamos una nueva instancia del fragmento del historial
+                        Historial h = Historial.newInstance();
+                        //Reemplazamos el fragmento ya existente por el del historial
+                        ft.replace(R.id.main_frame, h);
+                        //Añadimos null a la pila hacia atrás
+                        ft.addToBackStack(null);
+                        //Ejecuta la transacción de fragmentos
+                        ft.commit();
                         break;
                 }
 

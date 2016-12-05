@@ -16,7 +16,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.io.DataOutputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.concurrent.ExecutionException;
+
+import static android.content.Context.MODE_PRIVATE;
 
 
 /**
@@ -100,6 +106,7 @@ public class AuthFragment extends Fragment {
                 System.out.println("Está activa "+online);
 
                 if(online) {
+
                     Autenticar aut = new Autenticar();
 
                     try {
@@ -120,11 +127,26 @@ public class AuthFragment extends Fragment {
                     System.out.println("SESION-ID: " + sesion.getmSessionId());
                     System.out.println("EXPIRES: " + sesion.getmExpires());
 
-
                     Intent intent = new Intent(getActivity(), Main2Activity.class);
                     startActivity(intent);
 
-
+                    //Para guardar el usuario y la contraseña en un archivo
+                    try {
+                        FileOutputStream os;
+                        try {
+                            os = getContext().openFileOutput("historial", MODE_PRIVATE);
+                            DataOutputStream dos = new DataOutputStream(os);
+                            System.out.println(mAutentica.getmUser()+" "+ mAutentica.getmPass());
+                            dos.writeUTF(mAutentica.getmUser());
+                            dos.writeUTF(mAutentica.getmPass());
+                            dos.close();
+                            os.close();
+                        }catch(FileNotFoundException f){
+                            f.printStackTrace();
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
 
                 }else{
                     Toast.makeText(getActivity(), "Active la conexión a Internet", Toast.LENGTH_SHORT).show();
