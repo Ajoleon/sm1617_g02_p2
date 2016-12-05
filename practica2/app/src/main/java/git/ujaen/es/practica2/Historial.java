@@ -55,7 +55,7 @@ public class Historial extends Fragment {
         ListView drawerListView = (ListView)rootView.findViewById(R.id.listview);
 
         System.out.println("Llegamos aquí");
-        drawerListView.setAdapter(new ArrayAdapter<String>(getActivity(),R.layout.text_view, opciones));
+        drawerListView.setAdapter(new ArrayAdapter<String>(getActivity(),android.R.layout.simple_list_item_1, opciones));
 
         return v;
 
