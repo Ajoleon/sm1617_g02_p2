@@ -1,92 +1,55 @@
 package git.ujaen.es.practica2;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.os.AsyncTask;
-import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Toast;
 
-import java.io.*;
-import java.net.*;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
-
-public class MainActivity extends AppCompatActivity {
-
-
-    /**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.
-     */
-
+public class Main3Activity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main3);
 
-        setContentView(R.layout.activity_main);
 
-        SharedPreferences settings = getSharedPreferences("sesion", 0);
+        //Llamamos al Gestor de fragmentos
+        FragmentManager fm = getSupportFragmentManager();
+        //Comenzamos la transacción de fragmentos
+        FragmentTransaction ft = fm.beginTransaction();
+        //Encontramos el fragmento principal de la aplicación
+        Fragment f = fm.findFragmentById(R.id.main_frame);
 
-        String sesionid = settings.getString("SESION-ID", "");
-        String expires = settings.getString("EXPIRES", "0000-00-00-00-00-00");
-        System.out.println(expires);
+        //Si antes no había ningún fragmento
+        if (f == null) {
+            /**Creamos una nueva instancia del fragmento de autenticación, donde se inician los parámetros
+             *
+             * @see AuthFragment.newInstance() Método donde se crea la nueva instancia del fragmento de autenticación
+             */
+        System.out.println("Entrasdasda");
+            Historial p = Historial.newInstance();
+            //Añadimos el fragmento al main_frame
+            ft.add(R.id.main_frame, p);
+            //Añadimos null a la pila hacia atrás
+            ft.addToBackStack(null);
+            //Ejecuta la transacción de fragmentos
+            ft.commit();
 
-        Date date = new Date();
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
-        Date fecha = null;
-        Date fechaactual = new Date();
-
-        try {
-            fecha = dateFormat.parse(expires);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        try {
-            fechaactual = dateFormat.parse(dateFormat.format(date));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        System.out.println("Fecha actual "+fechaactual+ " Fecha "+fecha);
-        if (fechaactual.after(fecha)) {
-
-            FragmentManager fm = getSupportFragmentManager();
-            FragmentTransaction ft = fm.beginTransaction();
-
-            Fragment f = fm.findFragmentById(R.id.main_frame);
-            if (f == null) {//Si no es null es que había un fragmento
-                AuthFragment au = AuthFragment.newInstance("","");
-                ft.add(R.id.main_frame, au);
-                ft.addToBackStack(null);
-                ft.commit();
-
-            }
-        } else {
-            Intent intent= new Intent(this,Main2Activity.class);
-            startActivity(intent);
         }
 
         listview();
     }
-    public void listview(){
+
+    public void listview() {
         //String para listview con los títulos de los fragmentos
-        final String[] opciones = { "Explicación", "Autenticación", "Historial de usuarios"};
+        final String[] opciones = {"Explicación", "Autenticación", "Historial de usuarios"};
 
         //Creamos el adaptador
         ArrayAdapter adaptador = new ArrayAdapter(this, android.R.layout.simple_list_item_1, opciones);
@@ -107,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
              * @param id    id del item
              */
             @Override
-            public void onItemClick(AdapterView<?> a, View v, int position, long id){
+            public void onItemClick(AdapterView<?> a, View v, int position, long id) {
                 //Llamamos al Gestor de fragmentos
                 FragmentManager fm = getSupportFragmentManager();
                 //Comenzamos la transacción de fragmentos
@@ -173,9 +136,4 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
 }
-
-
-
-

@@ -7,6 +7,7 @@ import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -21,7 +22,7 @@ import java.util.ArrayList;
  * Created by Pablo on 5/12/2016.
  */
 
-public class Historial extends ListFragment {
+public class Historial extends Fragment {
     /**Método para crear una nueva instancia del fragmento del historial
      *
      * @return fragmento de explicación
@@ -32,20 +33,7 @@ public class Historial extends ListFragment {
     }
 
 
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
 
-        // Rellena la lista con estos valores
-        String[] values = new String[]{"uno", "dos","tres"};
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
-                android.R.layout.simple_list_item_1, values);
-        setListAdapter(adapter);
-
-        registerForContextMenu(getListView());
-
-    }
     /**Método al que se llama al crear la vista
      *
      * @param inflater Necesario para inflar el fragmento con la vista
@@ -53,12 +41,27 @@ public class Historial extends ListFragment {
      * @param savedInstanceState Instancia de los parámetros guardados tras un recreado del fragmento (no lo vamos a utilizar)
      * @return la vista
      */
-    /*@Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        //Infla  el contenedor con el fragmento de explicación
-    //    View fragmento = inflater.inflate(R.layout.fragment_log, container, false);
 
-   //     String[] lista = new String[]{"hola"};
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        super.onCreateView(inflater, container, savedInstanceState);
+        View v =  inflater.inflate(R.layout.fragment_log, container, false);
+
+
+        //TODO el adaptador bien
+        String[] opciones = {"Explicación", "Autenticación", "Historial de usuarios"};
+
+        View rootView = inflater.inflate(R.layout.fragment_log,container, false);
+        ListView drawerListView = (ListView)rootView.findViewById(R.id.listview);
+
+        System.out.println("Llegamos aquí");
+        drawerListView.setAdapter(new ArrayAdapter<String>(getActivity(),R.layout.text_view, opciones));
+
+        return v;
+
+
+//-----------------------------------------------------------
+        //     String[] lista = new String[]{"hola"};
 /*
         try {
             FileInputStream os;
@@ -103,8 +106,7 @@ public class Historial extends ListFragment {
         ListView listView = (ListView) getView().findViewById(R.id.listview1);
         listView.setAdapter(adapter);
         return rootview;
+    }*/
+
     }
-*/
-
-
 }

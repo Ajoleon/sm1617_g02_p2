@@ -1,5 +1,6 @@
 package git.ujaen.es.practica2;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -230,14 +231,8 @@ public class Main2Activity extends AppCompatActivity {
 
                         break;
                     case 2:
-                        //Creamos una nueva instancia del fragmento del historial
-                        Historial h = Historial.newInstance();
-                        //Reemplazamos el fragmento ya existente por el del historial
-                        ft.replace(R.id.main_frame, h);
-                        //Añadimos null a la pila hacia atrás
-                        ft.addToBackStack(null);
-                        //Ejecuta la transacción de fragmentos
-                        ft.commit();
+                        Intent intent = new Intent(v.getContext(), Main3Activity.class);
+                        startActivity(intent);
                         break;
                 }
 
