@@ -1,7 +1,9 @@
 package git.ujaen.es.practica2;
 
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +21,7 @@ import java.util.ArrayList;
  * Created by Pablo on 5/12/2016.
  */
 
-public class Historial extends Fragment {
+public class Historial extends ListFragment {
     /**Método para crear una nueva instancia del fragmento del historial
      *
      * @return fragmento de explicación
@@ -29,6 +31,21 @@ public class Historial extends Fragment {
         return fragment;
     }
 
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        // Rellena la lista con estos valores
+        String[] values = new String[]{"uno", "dos","tres"};
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
+                android.R.layout.simple_list_item_1, values);
+        setListAdapter(adapter);
+
+        registerForContextMenu(getListView());
+
+    }
     /**Método al que se llama al crear la vista
      *
      * @param inflater Necesario para inflar el fragmento con la vista
