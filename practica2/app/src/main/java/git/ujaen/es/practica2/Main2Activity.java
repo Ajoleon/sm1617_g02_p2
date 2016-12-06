@@ -35,7 +35,7 @@ public class Main2Activity extends AppCompatActivity {
         if(f==null){
             /**Creamos una nueva instancia del fragmento de autenticación, donde se inician los parámetros
              *
-             * @see AuthFragment.newInstance() Método donde se crea la nueva instancia del fragmento de autenticación
+             * @see PasoParam.newInstance() Método donde se crea la nueva instancia del fragmento de autenticación
              */
             PasoParam p = PasoParam.newInstance();
             //Añadimos el fragmento al main_frame
@@ -47,6 +47,7 @@ public class Main2Activity extends AppCompatActivity {
 
         }
 
+        //ListView de actividad 2, con explicación, toma de medidas, desconexión e historial de usuarios
         listview1();
     }
 
@@ -86,88 +87,69 @@ public class Main2Activity extends AppCompatActivity {
 
                     //Caso de posición 0, que es del fragmento de explicación
                     case 0:
-                        //if(autenticado) {
                         //Se inicializa una nueva instancia del fragmento de explicación
                         Explanation e = Explanation.newInstance();
-
                         //Se añade fragmento de explicación
                         ft.replace(R.id.main_frame, e);
-
                         //Añadimos null a la pila hacia atrás
                         ft.addToBackStack(null);
                         //Ejecuta la transacción de fragmentos
                         ft.commit();
-
-                        //Establecemos autenticado a false
-                        //    autenticado = false;
-                        //}
-
                         break;
 
-                    //Caso de posición 1,
+                    //Caso de posición 1, que es el fragmento de toma de medidas
                     case 1:
-                        //Si no se ha accedido al fragmento de autenticado, para que no haya
-                        //un bug en el recreado del fragmento el cambio a la otra vista lo realice
-                        //if(!autenticado){
                         //Creamos una nueva instancia del fragmento de autenticación, donde se inician los parámetros
                         PasoParam p = PasoParam.newInstance();
                         //Reemplazamos el fragmento al main_frame
                         ft.replace(R.id.main_frame, p);
-
                         //Añadimos null a la pila hacia atrás
                         ft.addToBackStack(null);
                         //Ejecuta la transacción de fragmentos
                         ft.commit();
-
-                        //Establecemos autenticado a true porque ha entrado en el fragmento de autenticación
-                        //    autenticado = true;
-                        //}
-
                         break;
-                    case 2:
 
+                    //Caso de posición 2, que es el fragmento de desconexión
+                    case 2:
+                        //Limpiamos las preferencias compartidas
                         SharedPreferences settings = getSharedPreferences("sesion", 0);
                         SharedPreferences.Editor editor = settings.edit();
                         editor.clear();
                         editor.commit();
 
+                        //Mostramos el fragmento de autenticación
                         AuthFragment au = AuthFragment.newInstance("", "");
                         //Reemplazamos el fragmento ya existente por el de autenticación
                         ft.replace(R.id.main_frame, au);
-
                         //Añadimos null a la pila hacia atrás
                         ft.addToBackStack(null);
                         //Ejecuta la transacción de fragmentos
                         ft.commit();
 
-                        //Para el desplegable en caso de abrirlo tras desconectar sin cerrar la aplicación
+                        //Para el desplegable de actividad 1 (en caso de abrirlo tras desconectar sin cerrar la aplicación)
                         listview2();
                         break;
+
+                    //Caso de posición 3, que es el fragmento de historial
                     case 3:
                         Historial h = Historial.newInstance();
                         //Reemplazamos el fragmento ya existente por el del historial
                         ft.replace(R.id.main_frame, h);
-
                         //Añadimos null a la pila hacia atrás
                         ft.addToBackStack(null);
                         //Ejecuta la transacción de fragmentos
                         ft.commit();
 
+                        //Para el desplegable de actividad 2
                         listview1();
                         break;
                 }
-
-                //Obtenemos texto del item en la posición clickada
-                //String texto = String.valueOf(a.getItemAtPosition(position));
-
-                //Mostramos tostada con el texto y la posición
-                //Toast.makeText(MainActivity.this, texto +", con posicion: "+ position, Toast.LENGTH_SHORT).show();
 
             }
         });
     }
 
-    //Para el desplegable en caso de abrirlo tras desconectar sin cerrar la aplicación
+    //Para el desplegable de la actividad 1 en caso de abrirlo tras desconectar sin cerrar la aplicación
     public void listview2(){
         //String para listview con los títulos de los fragmentos
         final String[] opciones = { "Explicación", "Autenticación", "Historial de usuarios"};
@@ -204,29 +186,18 @@ public class Main2Activity extends AppCompatActivity {
 
                     //Caso de posición 0, que es del fragmento de explicación
                     case 0:
-                        //if(autenticado) {
                         //Se inicializa una nueva instancia del fragmento de explicación
                         Explanation e = Explanation.newInstance();
-
                         //Se añade fragmento de explicación
                         ft.replace(R.id.main_frame, e);
-
                         //Añadimos null a la pila hacia atrás
                         ft.addToBackStack(null);
                         //Ejecuta la transacción de fragmentos
                         ft.commit();
-
-                        //Establecemos autenticado a false
-                        //    autenticado = false;
-                        //}
-
                         break;
 
-                    //Caso de posición 1,
+                    //Caso de posición 1, que es el fragmento de autenticación
                     case 1:
-                        //Si no se ha accedido al fragmento de autenticado, para que no haya
-                        //un bug en el recreado del fragmento el cambio a la otra vista lo realice
-                        //if(!autenticado){
                         //Creamos una nueva instancia del fragmento de autenticación, donde se inician los parámetros
                         AuthFragment au = AuthFragment.newInstance("", "");
                         //Reemplazamos el fragmento ya existente por el de autenticación
@@ -236,30 +207,19 @@ public class Main2Activity extends AppCompatActivity {
                         ft.addToBackStack(null);
                         //Ejecuta la transacción de fragmentos
                         ft.commit();
-
-                        //Establecemos autenticado a true porque ha entrado en el fragmento de autenticación
-                        //    autenticado = true;
-                        //}
-
                         break;
+
+                    //Caso de posición 2, que es el fragmento del historial de login
                     case 2:
                         Historial h = Historial.newInstance();
                         //Reemplazamos el fragmento ya existente por el del historial
                         ft.replace(R.id.main_frame, h);
-
                         //Añadimos null a la pila hacia atrás
                         ft.addToBackStack(null);
                         //Ejecuta la transacción de fragmentos
                         ft.commit();
-
                         break;
                 }
-
-                //Obtenemos texto del item en la posición clickada
-                //String texto = String.valueOf(a.getItemAtPosition(position));
-
-                //Mostramos tostada con el texto y la posición
-                //Toast.makeText(MainActivity.this, texto +", con posicion: "+ position, Toast.LENGTH_SHORT).show();
 
             }
         });

@@ -1,24 +1,23 @@
 package git.ujaen.es.practica2;
 
-/**
+/**Clase para recoger los datos
+ *
  * Created by Antonio on 29/09/2016.
- * Nota: Poner las variables en ingles .Para java doc pongo dos asteriscos.
  */
- /**Clase para recoger los datos*/
 public class Autentication {
 
-	/**Al declararse protected no se pueden usar fuera de la clase, hay que crear un constructor para introducir datos.
-	*/
-    protected String mUser="user"; //inicializarlo, orotected es que solo puedo usarlo en clases que heredan
+	//Al declararse protected no se pueden usar fuera de la clase, solo pueden usarlo las clases que heredan
+    //Inicializo atributos de la clase
+    protected String mUser="user";
     protected String mPass ="";
 	
-	/**Constructor autenticación
-	*/
+	//Constructor de la clase Autentication
     public Autentication(String User, String Pass) {
         this.mUser = User;
         this.mPass = Pass;
     }
 
+    //Métodos para establecer o devolver el usuario y la contraseña
      public String getmUser() {
          return mUser;
      }
@@ -35,4 +34,3 @@ public class Autentication {
          this.mPass = mPass;
      }
  }
-// Autentication auth = new Autentication("pepe", "123456", "127.0.0.1", Autentication.SERVICE_PORT); forma de llamar al constructor

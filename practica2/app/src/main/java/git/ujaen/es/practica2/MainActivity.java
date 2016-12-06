@@ -29,13 +29,6 @@ import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
 
-
-    /**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.
-     */
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         }
 
+        //Listview de la actividad 1, con explicación, autenticación, e historial de usuarios
         listview();
     }
     public void listview(){
@@ -120,29 +114,18 @@ public class MainActivity extends AppCompatActivity {
 
                     //Caso de posición 0, que es del fragmento de explicación
                     case 0:
-                        //if(autenticado) {
                         //Se inicializa una nueva instancia del fragmento de explicación
                         Explanation e = Explanation.newInstance();
-
                         //Se añade fragmento de explicación
                         ft.replace(R.id.main_frame, e);
-
                         //Añadimos null a la pila hacia atrás
                         ft.addToBackStack(null);
                         //Ejecuta la transacción de fragmentos
                         ft.commit();
-
-                        //Establecemos autenticado a false
-                        //    autenticado = false;
-                        //}
-
                         break;
 
-                    //Caso de posición 1,
+                    //Caso de posición 1, que es el fragmento de autenticación
                     case 1:
-                        //Si no se ha accedido al fragmento de autenticado, para que no haya
-                        //un bug en el recreado del fragmento el cambio a la otra vista lo realice
-                        //if(!autenticado){
                         //Creamos una nueva instancia del fragmento de autenticación, donde se inician los parámetros
                         AuthFragment au = AuthFragment.newInstance("", "");
                         //Reemplazamos el fragmento ya existente por el de autenticación
@@ -152,30 +135,19 @@ public class MainActivity extends AppCompatActivity {
                         ft.addToBackStack(null);
                         //Ejecuta la transacción de fragmentos
                         ft.commit();
-
-                        //Establecemos autenticado a true porque ha entrado en el fragmento de autenticación
-                        //    autenticado = true;
-                        //}
-
                         break;
+
+                    //Caso de posición 2, que es el fragmento del historial de login
                     case 2:
                         Historial h = Historial.newInstance();
                         //Reemplazamos el fragmento ya existente por el del historial
                         ft.replace(R.id.main_frame, h);
-
                         //Añadimos null a la pila hacia atrás
                         ft.addToBackStack(null);
                         //Ejecuta la transacción de fragmentos
                         ft.commit();
-
                         break;
                 }
-
-                //Obtenemos texto del item en la posición clickada
-                //String texto = String.valueOf(a.getItemAtPosition(position));
-
-                //Mostramos tostada con el texto y la posición
-                //Toast.makeText(MainActivity.this, texto +", con posicion: "+ position, Toast.LENGTH_SHORT).show();
 
             }
         });
