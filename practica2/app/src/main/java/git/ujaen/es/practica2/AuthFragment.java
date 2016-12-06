@@ -140,6 +140,7 @@ public class AuthFragment extends Fragment {
                     Intent intent = new Intent(getActivity(), Main2Activity.class);
                     startActivity(intent);
 
+
                     InputStreamReader archivo = null;
                     try {
                         archivo = new InputStreamReader(getContext().openFileInput("historial"));
@@ -160,6 +161,7 @@ public class AuthFragment extends Fragment {
                             e.printStackTrace();
                         }
                     }catch(NullPointerException e){}
+
 
                     try{
                         OutputStreamWriter osw = new OutputStreamWriter(getContext().openFileOutput("historial", MODE_PRIVATE));

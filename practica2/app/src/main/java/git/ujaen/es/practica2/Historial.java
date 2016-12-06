@@ -17,7 +17,10 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
+
+import static android.content.Context.MODE_PRIVATE;
 
 /**Fragmento para listar el historial de autenticaciones
  *
@@ -53,42 +56,55 @@ public class Historial extends Fragment {
         super.onCreateView(inflater, container, savedInstanceState);
         View v = inflater.inflate(R.layout.fragment_log, container, false);
 
-        redibuja(v);
+        EstableceAdapter(v);
 
         return v;
 
     }
 
-    public void redibuja(View fragment) {
+    public void EstableceAdapter(View fragment) {
 
-        String texto;
-        texto = leerArchivo();
-
-        String[] leadsNames = new String[]{};
+        String[] leadsNames;
         String [] linea = null;
 
-        if(!texto.equals("")) {
-            for (int i = 0; i < texto.length(); i++) {
-                linea = texto.split("&&");
+        linea = leerArchivo();
+        if(linea!=null) {
+
+            if(linea.length<=3) {
+                //Establezco el tamaño del adaptador
+                leadsNames = new String[linea.length];
+
+                //Recorro linea y lo voy metiendo en el adaptador
+                for (int i = 0; i < linea.length; i++) {
+                    try {
+                        leadsNames[i] = linea[i];
+                    } catch (ArrayIndexOutOfBoundsException e) {
+                    }
+                }
+
+                mLeadsList = (ListView) fragment.findViewById(R.id.listview);
+                mLeadsAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, leadsNames);
+                mLeadsList.setAdapter(mLeadsAdapter);
+            }else{
+                ultimosLogin();
+                linea = leerArchivo();
+                leadsNames = new String[linea.length];
+
+                //Recorro linea y lo voy metiendo en el adaptador
+                for (int i = 0; i < linea.length; i++) {
+                    try {
+                        leadsNames[i] = linea[i];
+                    } catch (ArrayIndexOutOfBoundsException e) {
+                    }
+                }
+                mLeadsList = (ListView) fragment.findViewById(R.id.listview);
+                mLeadsAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, leadsNames);
+                mLeadsList.setAdapter(mLeadsAdapter);
             }
-
-            leadsNames = new String[linea.length];
-
-            int j = 0;
-            for (int i = 0; i < linea.length; i++) {
-                try {
-                    leadsNames[i] = linea[j];
-                }catch(ArrayIndexOutOfBoundsException e){ }
-                j = j + 1;
-            }
-
-            mLeadsList = (ListView) fragment.findViewById(R.id.listview);
-            mLeadsAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, leadsNames);
-            mLeadsList.setAdapter(mLeadsAdapter);
         }
     }
 
-    public String leerArchivo(){
+    public String[] leerArchivo(){
 
         InputStreamReader archivo = null;
         try {
@@ -112,7 +128,50 @@ public class Historial extends Fragment {
             System.out.println("Leído: "+texto);
         }catch(NullPointerException e){}
 
-        return texto;
+        if(!texto.equals("")) {
+            String[] linea = new String[]{};
+            for (int i = 0; i < texto.length(); i++) {
+                linea = texto.split("&&");
+            }
+            return linea;
+
+        }else{
+            return null;
+        }
+
+    }
+    public void ultimosLogin(){
+
+        //Cojo el texto con todos las lineas que hay en el archivo
+        //Las separo en el array linea
+        String [] linea = null;
+        linea = leerArchivo();
+
+        OutputStreamWriter osw=null;
+        try {
+            osw = new OutputStreamWriter(getContext().openFileOutput("historial", MODE_PRIVATE));
+            osw.write("");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        for (int i=linea.length-3; i<linea.length;i++){
+
+            try{
+                osw.append(linea[i]);
+                System.out.println("Archivo "+linea[i]);
+                osw.append("&&");
+            }catch(Exception e){ }
+        }
+
+        try {
+            osw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 }
 
