@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 public class Main3Activity extends AppCompatActivity {
 
@@ -29,20 +30,20 @@ public class Main3Activity extends AppCompatActivity {
 
         //Si antes no había ningún fragmento
         if (f == null) {
-            /**Creamos una nueva instancia del fragmento de autenticación, donde se inician los parámetros
+            /**Creamos una nueva instancia del fragmento de historial, donde se inician los parámetros
              *
              * @see AuthFragment.newInstance() Método donde se crea la nueva instancia del fragmento de autenticación
              */
-        System.out.println("Entrasdasda");
-            Historial p = Historial.newInstance();
+            Historial h = Historial.newInstance();
             //Añadimos el fragmento al main_frame
-            ft.add(R.id.main_frame, p);
+            ft.add(R.id.main_frame, h);
             //Añadimos null a la pila hacia atrás
             ft.addToBackStack(null);
             //Ejecuta la transacción de fragmentos
             ft.commit();
 
         }
+
 
         listview();
     }

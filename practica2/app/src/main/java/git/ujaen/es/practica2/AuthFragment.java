@@ -16,10 +16,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.util.concurrent.ExecutionException;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -93,7 +96,7 @@ public class AuthFragment extends Fragment {
         }
 
         // Inflate the layout for this fragment
-        View fragmento = inflater.inflate(R.layout.fragment_auth, container, false);
+        final View fragmento = inflater.inflate(R.layout.fragment_auth, container, false);
 
         redibuja(fragmento);
 
@@ -101,9 +104,16 @@ public class AuthFragment extends Fragment {
         boton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mEditUser = (EditText) fragmento.findViewById(R.id.auth_edit_user);
+                mEditPass = (EditText) fragmento.findViewById(R.id.auth_edit_pass);
+
+                mAutentica.setmUser(mEditUser.getEditableText().toString());
+                mAutentica.setmPass(mEditPass.getEditableText().toString());
+
+                mEditUser.setText(mAutentica.getmUser());
+                mEditPass.setText(mAutentica.getmPass());
 
                 Boolean online = isOnline();
-                System.out.println("Está activa "+online);
 
                 if(online) {
 
@@ -130,23 +140,36 @@ public class AuthFragment extends Fragment {
                     Intent intent = new Intent(getActivity(), Main2Activity.class);
                     startActivity(intent);
 
-                    //Para guardar el usuario y la contraseña en un archivo
+                    InputStreamReader archivo = null;
                     try {
-                        FileOutputStream os;
-                        try {
-                            os = getContext().openFileOutput("historial", MODE_PRIVATE);
-                            DataOutputStream dos = new DataOutputStream(os);
-                            System.out.println(mAutentica.getmUser()+" "+ mAutentica.getmPass());
-                            dos.writeUTF(mAutentica.getmUser());
-                            dos.writeUTF(mAutentica.getmPass());
-                            dos.close();
-                            os.close();
-                        }catch(FileNotFoundException f){
-                            f.printStackTrace();
-                        }
-                    } catch (IOException e) {
+                        archivo = new InputStreamReader(getContext().openFileInput("historial"));
+                    } catch (FileNotFoundException e) {
                         e.printStackTrace();
                     }
+                    // Creamos un objeto buffer, en el que iremos almacenando el contenido
+                    // del archivo.
+                    String texto = "";
+                    try{
+                        BufferedReader br = new BufferedReader(archivo);
+                        texto = "";
+                        try {
+                            while(br.ready()){
+                                texto = texto + br.readLine();
+                            }
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }catch(NullPointerException e){}
+
+                    try{
+                        OutputStreamWriter osw = new OutputStreamWriter(getContext().openFileOutput("historial", MODE_PRIVATE));
+                        osw.write(texto);
+                        osw.write(mAutentica.getmUser());
+                        osw.write(" ");
+                        osw.write(mAutentica.getmPass());
+                        osw.write("&&");
+                        osw.close();
+                    }catch(Exception e){ }
 
                 }else{
                     Toast.makeText(getActivity(), "Active la conexión a Internet", Toast.LENGTH_SHORT).show();
@@ -170,10 +193,15 @@ public class AuthFragment extends Fragment {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 mAutentica.setmUser(mEditUser.getEditableText().toString());
-                mAutentica.setmPass(mEditPass.getEditableText().toString());
-
             }
         });
+        mEditPass.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                mAutentica.setmPass(mEditPass.getEditableText().toString());
+            }
+        });
+
         mEditUser.setText(mAutentica.getmUser());
         mEditPass.setText(mAutentica.getmPass());
 
