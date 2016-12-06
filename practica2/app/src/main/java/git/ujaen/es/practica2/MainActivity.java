@@ -159,8 +159,15 @@ public class MainActivity extends AppCompatActivity {
 
                         break;
                     case 2:
-                        Intent intent = new Intent(v.getContext(), Main3Activity.class);
-                        startActivity(intent);
+                        Historial h = Historial.newInstance();
+                        //Reemplazamos el fragmento ya existente por el del historial
+                        ft.replace(R.id.main_frame, h);
+
+                        //Añadimos null a la pila hacia atrás
+                        ft.addToBackStack(null);
+                        //Ejecuta la transacción de fragmentos
+                        ft.commit();
+
                         break;
                 }
 

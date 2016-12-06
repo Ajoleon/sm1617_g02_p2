@@ -52,7 +52,7 @@ public class Main2Activity extends AppCompatActivity {
 
     public void listview1(){
         //String para listview con los títulos de los fragmentos
-        final String[] opciones = { "Explicación", "Toma de medidas", "Desconexión"};
+        final String[] opciones = { "Explicación", "Toma de medidas", "Desconexión", "Historial de usuarios"};
 
         //Creamos el adaptador
         ArrayAdapter adaptador = new ArrayAdapter(this, android.R.layout.simple_list_item_1, opciones);
@@ -143,6 +143,18 @@ public class Main2Activity extends AppCompatActivity {
                         //Para el desplegable en caso de abrirlo tras desconectar sin cerrar la aplicación
                         listview2();
                         break;
+                    case 3:
+                        Historial h = Historial.newInstance();
+                        //Reemplazamos el fragmento ya existente por el del historial
+                        ft.replace(R.id.main_frame, h);
+
+                        //Añadimos null a la pila hacia atrás
+                        ft.addToBackStack(null);
+                        //Ejecuta la transacción de fragmentos
+                        ft.commit();
+
+                        listview1();
+                        break;
                 }
 
                 //Obtenemos texto del item en la posición clickada
@@ -231,8 +243,15 @@ public class Main2Activity extends AppCompatActivity {
 
                         break;
                     case 2:
-                        Intent intent = new Intent(v.getContext(), Main3Activity.class);
-                        startActivity(intent);
+                        Historial h = Historial.newInstance();
+                        //Reemplazamos el fragmento ya existente por el del historial
+                        ft.replace(R.id.main_frame, h);
+
+                        //Añadimos null a la pila hacia atrás
+                        ft.addToBackStack(null);
+                        //Ejecuta la transacción de fragmentos
+                        ft.commit();
+
                         break;
                 }
 
