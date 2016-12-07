@@ -35,42 +35,54 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
 
+        //Obtengo las preferencias
         SharedPreferences settings = getSharedPreferences("sesion", 0);
 
         String sesionid = settings.getString("SESION-ID", "");
         String expires = settings.getString("EXPIRES", "0000-00-00-00-00-00");
         System.out.println(expires);
 
+        //Defino el formato de fecha y la clase Fecha para obtener la actual
         Date date = new Date();
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
+
+        //Inicializo variables para la fecha
         Date fecha = null;
         Date fechaactual = new Date();
 
+        //Convierto la fecha en la que expira al formato buscado
         try {
             fecha = dateFormat.parse(expires);
         } catch (ParseException e) {
             e.printStackTrace();
         }
+        //Convierto la fecha actual al formato buscado
         try {
             fechaactual = dateFormat.parse(dateFormat.format(date));
         } catch (ParseException e) {
             e.printStackTrace();
         }
         System.out.println("Fecha actual "+fechaactual+ " Fecha "+fecha);
+
+        //Si la fecha actual a la fecha en la que expira la sesión
         if (fechaactual.after(fecha)) {
 
+            //Inicio gestor de fragmentos
             FragmentManager fm = getSupportFragmentManager();
             FragmentTransaction ft = fm.beginTransaction();
-
             Fragment f = fm.findFragmentById(R.id.main_frame);
-            if (f == null) {//Si no es null es que había un fragmento
+
+            //Si no hay ningún fragmento
+            if (f == null) {
+                //Añado a la vista el fragmento de Autenticación
                 AuthFragment au = AuthFragment.newInstance("","");
                 ft.add(R.id.main_frame, au);
                 ft.addToBackStack(null);
                 ft.commit();
-
             }
-        } else {
+
+        } else {//Si todavía se mantiene la sesión
+            //Paso a la segunda actividad
             Intent intent= new Intent(this,Main2Activity.class);
             startActivity(intent);
         }
@@ -78,6 +90,7 @@ public class MainActivity extends AppCompatActivity {
         //Listview de la actividad 1, con explicación, autenticación, e historial de usuarios
         listview();
     }
+
     public void listview(){
         //String para listview con los títulos de los fragmentos
         final String[] opciones = { "Explicación", "Autenticación", "Historial de usuarios"};
@@ -102,6 +115,8 @@ public class MainActivity extends AppCompatActivity {
              */
             @Override
             public void onItemClick(AdapterView<?> a, View v, int position, long id){
+
+
                 //Llamamos al Gestor de fragmentos
                 FragmentManager fm = getSupportFragmentManager();
                 //Comenzamos la transacción de fragmentos
