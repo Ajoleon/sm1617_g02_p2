@@ -7,6 +7,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -223,5 +225,42 @@ public class Main2Activity extends AppCompatActivity {
 
             }
         });
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+
+        boolean result = super.onCreateOptionsMenu(menu);
+
+        return result;
+
+
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+        //Llamamos al Gestor de fragmentos
+        FragmentManager fm = getSupportFragmentManager();
+        //Comenzamos la transacción de fragmentos
+        FragmentTransaction ft = fm.beginTransaction();
+        //Encontramos el fragmento principal de la aplicación
+        Fragment f = fm.findFragmentById(R.id.main_frame);
+        if (id == R.id.main_menu_help) {
+            //Se inicializa una nueva instancia del fragmento de explicación
+            Explanation e = Explanation.newInstance();
+            //Se añade fragmento de explicación
+            ft.replace(R.id.main_frame, e);
+            //Añadimos null a la pila hacia atrás
+            ft.addToBackStack(null);
+            //Ejecuta la transacción de fragmentos
+            ft.commit();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }

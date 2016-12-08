@@ -13,6 +13,7 @@
     <!--fragment_explanation-->
     <string name="main_description">Práctica realizada para la asignatura <i>Servicios Moviles</i> del grado de Ingenieria Telemática de la Universidad de Jaén</string>
     <string name="explanation">Esta es una explicación detallada de la práctica</string>
+    <string name="main_menu_help_string">Acerca de ...</string>
 
 
 </resources>
